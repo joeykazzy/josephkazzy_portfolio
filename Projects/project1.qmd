@@ -1,7 +1,7 @@
 ---
 title: "Client Report - [Insert Project Title]"
 subtitle: "Course DS 250"
-author: "[STUDENT NAME]"
+author: "[Joseph Kazmierski]]"
 format:
   html:
     self-contained: true
@@ -50,98 +50,104 @@ __Highlight the Questions and Tasks__
 
 ## QUESTION|TASK 1
 
-__COPY PASTE QUESTION|TASK 1 FROM THE PROJECT HERE__
+__How does your name at your birth year compare to its use historically?__
 
-_type your results and analysis here_
+_The name Joseph has been pretty popular over the last 100 years. There were 2 peaks in the last hundred years, one of them was during the 50s, and one was during the 90s.The trend of the name Joseph started going down in the 2000s, and my birth year is the beginning of the trend going down. It will be less probable for a person named Joseph to be younger than me than it is for someone named Joseph to be older than me._
 
 ```{python}
 #| label: Q1
 #| code-summary: Read and format data
 # Include and execute your code here
-
-
-```
-
-_include figures in chunks and discuss your findings in the figure._
-
-```{python}
-#| label: Q1 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-chart = px.bar(df.head(200),
-    x="name", 
-    y="AK"
+fig1 = px.line(
+    df.query('name == "Joseph"'),
+    x = 'year',
+    y = 'Total',
+    title = "The Use Of The Name Joseph Over Time"
 )
-chart.show()
+
+# fig1.add_vline(
+#     x = 2005,
+#     line_dash = 'dot',
+#     line_color = 'black'
+
+fig1.update_layout(
+    xaxis_title = "Year",
+    title_font = dict(size = 24),
+)
+
+fig1.add_scatter(
+    x = df.query('name == "Joseph"')[df["year"] == 2005]["year"],
+    y = df.query('name == "Joseph"')[df["year"] == 2005]["Total"]
+)
+
+fig1
 ```
 
-
-```{python}
-#| label: Q1 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = df.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
-
+_The red dot on the graph is my birth year. As you can see, there is a trend downward after my birth year_
 
 ## QUESTION|TASK 2
 
-__COPY PASTE QUESTION|TASK 2 FROM THE PROJECT HERE__
+__If you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?__
 
-_type your results and analysis here_
-
-```{python}
-#| label: Q2
-#| code-summary: Read and format data
-# Include and execute your code here
-
-
-```
-
-_include figures in chunks and discuss your findings in the figure._
+_The name Brittney peaked in the year 1990, and the average birth year for all people named Brittany is 1991. This means that there is a high probability that the person on the phone is around the age 33. To be safe, you could assume that the person is between the ages 30-37. It would much less likely for the person to be around my age, 19, because the graph looks like the year 2005 is about 3 standard deviations away from the mean. As well as for over the age 44, because that seems to be close to the 3rd standard deviation as well. _
 
 ```{python}
-#| label: Q2 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-chart = px.bar(df.head(200),
-    x="name", 
-    y="AK"
+#Making the bar plot
+fig2 = px.bar(
+    df.query('name == "Brittany"'),
+    x = 'year',
+    y = 'Total',
+    title = 'The Name Brittany Over Time'
 )
-chart.show()
+#Renaming the x axis so there is not a lower case, and changing title size
+fig2.update_layout(
+    xaxis_title = "Year",
+    title_font = dict(size = 24),
+)
+#Updating the range of y axis to make more room for the arrows
+fig2.update_yaxes(
+    range = [0, 40000]
+)
+#Vertical line at average year
+fig2.add_vline(
+    x = 1991,
+    line_dash = 'dot',
+    line_color = 'black'
+)
+#Arrow pointing to peak
+fig2.add_annotation(
+    x=1990, 
+    y=max(df.query('name == "Brittany"')['Total']), 
+    text="Peak",
+    showarrow=True,
+    arrowhead=1,
+    ax=-40,  
+    ay=-30,
+    arrowcolor="red",
+    font= dict(color="red")
+)
+#Arrow pointing to average year vertical line
+fig2.add_annotation(
+    x=1991, 
+    y=35000, 
+    text="Average Year",
+    showarrow=True,
+    arrowhead=1,
+    ax=40,  
+    ay=-20,
+    arrowcolor="black",
+    font= dict(color="black")
+)
+#Computing the average year that the name Brittany was used
+total_occurrences = df.query("name == 'Brittany'")['Total'].sum()
+average_year = (df.query("name == 'Brittany'")['Total'] * df.query("name == 'Brittany'")['year']).sum() / total_occurrences
+age = 2024 - average_year
+print(f"Average Age of All People Named Brittney: {age:.0f}")
+
+fig2
 ```
 
-
-```{python}
-#| label: Q2 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = df.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
-
-display(mydat)
-
-```
+_The graph provides a label for the peak year, and the average year. You can see that the graph follows a normal distribution, so it is more likely for the person named Brittany to be around 33 years old considering that is the average._
 
 
 ## QUESTION|TASK 3
