@@ -52,7 +52,7 @@ __Highlight the Questions and Tasks__
 
 __How does your name at your birth year compare to its use historically?__
 
-_The name Joseph has been pretty popular over the last 100 years. There were 2 peaks in the last hundred years, one of them was during the 50s, and one was during the 90s.The trend of the name Joseph started going down in the 2000s, and my birth year is the beginning of the trend going down. It will be less probable for a person named Joseph to be younger than me than it is for someone named Joseph to be older than me._
+_The name Joseph has been pretty popular over the last 100 years. There were 2 peaks in the last hundred years, one of them was during the 50s, and one was during the 90s. The trend of the name Joseph started going down in the 2000s, and my birth year is the beginning of the trend going down. It will be less probable for a person named Joseph to be younger than me than it is for someone named Joseph to be older than me._
 
 ```{python}
 #| label: Q1
