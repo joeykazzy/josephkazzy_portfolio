@@ -1,5 +1,5 @@
 ---
-title: "Client Report - [Insert Project Title]"
+title: "Client Report - [The Usage Of Names Over Time]"
 subtitle: "Course DS 250"
 author: "[Joseph Kazmierski]]"
 format:
@@ -36,8 +36,7 @@ import plotly.express as px
 
 ## Elevator pitch
 
-_paste your elevator pitch here_
-_A SHORT (4-5 SENTENCES) PARAGRAPH THAT `DESCRIBES KEY INSIGHTS` TAKEN FROM METRICS IN THE PROJECT RESULTS THINK TOP OR MOST IMPORTANT RESULTS._
+_Have you ever wondered why certain names become so popular at specific times in history? Countless factors can influence the usage of names, ranging from movies and celebrities to global events and shifts in social structure. In this report, you will discover intriguing information about how certain names change over time and explore events that may have an impact on their usage._
 
 ```{python}
 #| label: project data
@@ -46,46 +45,45 @@ _A SHORT (4-5 SENTENCES) PARAGRAPH THAT `DESCRIBES KEY INSIGHTS` TAKEN FROM METR
 df = pd.read_csv("https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv")
 ```
 
-__Highlight the Questions and Tasks__
 
-## QUESTION|TASK 1
+
+## The Usage Of My Name Over Time
 
 __How does your name at your birth year compare to its use historically?__
 
-_The name Joseph has been pretty popular over the last 100 years. There were 2 peaks in the last hundred years, one of them was during the 50s, and one was during the 90s. The trend of the name Joseph started going down in the 2000s, and my birth year is the beginning of the trend going down. It will be less probable for a person named Joseph to be younger than me than it is for someone named Joseph to be older than me._
+_My name, Joseph, has been pretty popular over the last 100 years. There were 2 peaks in the last hundred years, one of them was during the 50s, and one was during the 90s. The trend of the name Joseph started going down in the 2000s, and my birth year is the beginning of the trend going down. It will be less probable for a person named Joseph to be younger than me than it is for someone named Joseph to be older than me._
 
 ```{python}
-#| label: Q1
-#| code-summary: Read and format data
-# Include and execute your code here
+#Build the Plot
 fig1 = px.line(
     df.query('name == "Joseph"'),
     x = 'year',
     y = 'Total',
-    title = "The Use Of The Name Joseph Over Time"
+    title = "The Usage Of The Name Joseph Over Time"
 )
-
-# fig1.add_vline(
-#     x = 2005,
-#     line_dash = 'dot',
-#     line_color = 'black'
-
+#Add the Vertical line to mark my birth year
+fig1.add_vline(
+    x = 2005,
+    line_dash = 'dot',
+    line_color = 'black'
+)
+#Fix the x axis name, and resize the title
 fig1.update_layout(
     xaxis_title = "Year",
-    title_font = dict(size = 24),
+    title_font = dict(size = 20),
 )
+#Makes a dot on the page
+# fig1.add_scatter(
+#     x = df.query('name == "Joseph"')[df["year"] == 2005]["year"],
+#     y = df.query('name == "Joseph"')[df["year"] == 2005]["Total"]
+# )
 
-fig1.add_scatter(
-    x = df.query('name == "Joseph"')[df["year"] == 2005]["year"],
-    y = df.query('name == "Joseph"')[df["year"] == 2005]["Total"]
-)
-
-fig1
+# fig1
 ```
 
-_The red dot on the graph is my birth year. As you can see, there is a trend downward after my birth year_
+_The vertical black line on the graph marks my birth year. As you can see, there is a trend downward after my birth year_
 
-## QUESTION|TASK 2
+## How Old Should You Expect Brittany To Be?
 
 __If you talked to someone named Brittany on the phone, what is your guess of his or her age? What ages would you not guess?__
 
@@ -102,7 +100,7 @@ fig2 = px.bar(
 #Renaming the x axis so there is not a lower case, and changing title size
 fig2.update_layout(
     xaxis_title = "Year",
-    title_font = dict(size = 24),
+    title_font = dict(size = 20),
 )
 #Updating the range of y axis to make more room for the arrows
 fig2.update_yaxes(
@@ -150,49 +148,75 @@ fig2
 _The graph provides a label for the peak year, and the average year. You can see that the graph follows a normal distribution, so it is more likely for the person named Brittany to be around 33 years old considering that is the average._
 
 
-## QUESTION|TASK 3
+## How Did Religious Names Trend Over Time?
 
-__COPY PASTE QUESTION|TASK 3 FROM THE PROJECT HERE__
+__Mary, Martha, Peter, and Paul are all Christian names. From 1920 - 2000, compare the name usage of each of the four names. What trends do you notice?__
 
-_type your results and analysis here_
-
-```{python}
-#| label: Q3
-#| code-summary: Read and format data
-# Include and execute your code here
-
-
-```
-
-_include figures in chunks and discuss your findings in the figure._
+_In all four of the names, there is an upward trend around he year 1950, immediately followed by a gradual decrease for the names Martha, Paul, and Peter, but a very steep decrease for the name Mary. My guess is that something happened socially in the year 1950 that made religious names less popular. It could be anything from the baby boom to the Cold War that caused a decrease in religious names._
 
 ```{python}
-#| label: Q3 chart
-#| code-summary: plot example
-#| fig-cap: "My useless chart"
-#| fig-align: center
-# Include and execute your code here
-chart = px.bar(df.head(200),
-    x="name", 
-    y="AK"
+#makes a list of desired names
+selected_names = df[df['name'].isin(['Mary', 'Martha', 'Peter', 'Paul'])]
+
+#Builds plot
+fig3 = px.line(
+    selected_names,
+    x = "year",
+    y = "Total",
+    color = 'name',
+    title = 'The Usage of The Names Mary, Martha, Peter, and Paul over time'
 )
-chart.show()
+
+#Set the range of x-axis to what the question asks for
+fig3.update_xaxes(
+    range = [1920, 2000]
+)
+
+#Renames x-axis, resize the title
+fig3.update_layout(
+    xaxis_title = "Year",
+    title_font = dict(size = 20)
+)
+
+fig3
 ```
 
+_As you can see from the chart above, the different names are color coded for better readability. The name Mary was the most popular for a while, but it dropped very heavily after the year 1954._
+
+## Do Characters In Popular Movies Effect How Often That Name is Used?
+
+__Think of a unique name from a famous movie. Plot the usage of that name and see how changes line up with the movie release. Does it look like the movie had an effect on usage?__
+
+_I decided to go with the name "Forrest" because of the movie "Forrest Gump". What is interesting but not surprising, is the instant increase in the usage of the name in the year 1994, followed by an immediate decrease. Now, it is not like there were a lot of people named Forrest, but you can clearly see an increase in the name immediately when the movie was released. This shows a direct correlation between the year that the movie "Forrest Gump" came out, and the dramatic increase in the usage of the name Forrest._
 
 ```{python}
-#| label: Q3 table
-#| code-summary: table example
-#| tbl-cap: "Not much of a table"
-#| tbl-cap-location: top
-# Include and execute your code here
-mydat = df.head(1000)\
-    .groupby('year')\
-    .sum()\
-    .reset_index()\
-    .tail(10)\
-    .filter(["year", "AK","AR"])
+#Builds the Plot
+fig4 = px.line(
+    df.query('name == "Forrest"'),
+    x = 'year',
+    y = 'Total',
+    title = 'The usage of the Name Forest Over Time'
+)
 
-display(mydat)
+#Draws arrow over the year Forrest g=Gump came out
+fig4.add_annotation(
+    x = 1994,
+    y = max(df.query('name == "Forrest"')['Total']),
+    text = 'The year that the move "Forrest Gump" came out',
+    showarrow = True,
+    arrowhead = 1,
+    ax = -20,
+    ay = -40,
+    font = dict(size = 16),
+)
 
+#Renames x-axis and resizes the title
+fig4.update_layout(
+    xaxis_title = "Year",
+    title_font = dict(size = 20)
+)
+
+fig4
 ```
+
+_The name Forrest isn't the most popular name, but there is an obvious increase in the year 1994, the same year that the movie Forrest Gump was released.
