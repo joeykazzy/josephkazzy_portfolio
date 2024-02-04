@@ -34,7 +34,7 @@ import plotly.express as px
 ```
 
 
-## Elevator pitch
+## Name Trends: Causes and Effects
 
 _Have you ever wondered why certain names become so popular at specific times in history? Countless factors can influence the usage of names, ranging from movies and celebrities to global events and shifts in social structure. In this report, you will discover intriguing information about how certain names change over time and explore events that may have an impact on their usage._
 

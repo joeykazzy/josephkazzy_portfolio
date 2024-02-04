@@ -239,8 +239,8 @@
     ]
   },
   {
-    "objectID": "Projects/project1.html#elevator-pitch",
-    "href": "Projects/project1.html#elevator-pitch",
+    "objectID": "Projects/project1.html#name-trends-causes-and-effects",
+    "href": "Projects/project1.html#name-trends-causes-and-effects",
     "title": "Client Report - [The Usage Of Names Over Time]",
     "section": "",
     "text": "Have you ever wondered why certain names become so popular at specific times in history? Countless factors can influence the usage of names, ranging from movies and celebrities to global events and shifts in social structure. In this report, you will discover intriguing information about how certain names change over time and explore events that may have an impact on their usage.\n\n\nRead and format project data\n# Include and execute your code here\ndf = pd.read_csv(\"https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv\")",
