@@ -36,53 +36,64 @@
   {
     "objectID": "Projects/project4.html",
     "href": "Projects/project4.html",
-    "title": "Client Report - [Insert Project Title]",
+    "title": "Client Report - [Project 4]",
     "section": "",
-    "text": "paste your elevator pitch here A SHORT (4-5 SENTENCES) PARAGRAPH THAT DESCRIBES KEY INSIGHTS TAKEN FROM METRICS IN THE PROJECT RESULTS THINK TOP OR MOST IMPORTANT RESULTS.\n\n\nRead and format project data\n# Include and execute your code here\ndf = pd.read_csv(\"https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv\")\n\n\nHighlight the Questions and Tasks",
+    "text": "Using models to predict data is a very important part of data science. It can be used for anything from risk management, as in when you are trying to predict what the future might look like for a specific metric, to finding missing data that was lost due to unknown reasons. For this report, it was the latter. In this report, I used classification models to predict missing data from before 1980s concerning houses in Denver. It is really interesting to see how different features of homes can show hints to the date that they were built.\n\n\nRead and format project data\n# Include and execute your code here\ndwellings_ml = pd.read_csv('https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv')",
     "crumbs": [
       "DS250 Projects",
       "Project 4"
     ]
   },
   {
-    "objectID": "Projects/project4.html#elevator-pitch",
-    "href": "Projects/project4.html#elevator-pitch",
-    "title": "Client Report - [Insert Project Title]",
+    "objectID": "Projects/project4.html#predictive-models",
+    "href": "Projects/project4.html#predictive-models",
+    "title": "Client Report - [Project 4]",
     "section": "",
-    "text": "paste your elevator pitch here A SHORT (4-5 SENTENCES) PARAGRAPH THAT DESCRIBES KEY INSIGHTS TAKEN FROM METRICS IN THE PROJECT RESULTS THINK TOP OR MOST IMPORTANT RESULTS.\n\n\nRead and format project data\n# Include and execute your code here\ndf = pd.read_csv(\"https://github.com/byuidatascience/data4names/raw/master/data-raw/names_year/names_year.csv\")\n\n\nHighlight the Questions and Tasks",
+    "text": "Using models to predict data is a very important part of data science. It can be used for anything from risk management, as in when you are trying to predict what the future might look like for a specific metric, to finding missing data that was lost due to unknown reasons. For this report, it was the latter. In this report, I used classification models to predict missing data from before 1980s concerning houses in Denver. It is really interesting to see how different features of homes can show hints to the date that they were built.\n\n\nRead and format project data\n# Include and execute your code here\ndwellings_ml = pd.read_csv('https://github.com/byuidatascience/data4dwellings/raw/master/data-raw/dwellings_ml/dwellings_ml.csv')",
     "crumbs": [
       "DS250 Projects",
       "Project 4"
     ]
   },
   {
-    "objectID": "Projects/project4.html#questiontask-1",
-    "href": "Projects/project4.html#questiontask-1",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 1",
-    "text": "QUESTION|TASK 1\nCOPY PASTE QUESTION|TASK 1 FROM THE PROJECT HERE\ntype your results and analysis here\n\n\nRead and format data\n# Include and execute your code here\n\n\ninclude figures in chunks and discuss your findings in the figure.\n::: {#cell-Q1 chart .cell execution_count=4}\n\nplot example\n# Include and execute your code here\nchart = px.bar(df.head(200),\n    x=\"name\", \n    y=\"AK\"\n)\nchart.show()\n\n\n                                                \nMy useless chart\n\n:::\n::: {#cell-Q1 table .cell .tbl-cap-location-top tbl-cap=‘Not much of a table’ execution_count=5}\n\ntable example\n# Include and execute your code here\nmydat = df.head(1000)\\\n    .groupby('year')\\\n    .sum()\\\n    .reset_index()\\\n    .tail(10)\\\n    .filter([\"year\", \"AK\",\"AR\"])\n\ndisplay(mydat)\n\n\n\n\n\n\n\n\n\nyear\nAK\nAR\n\n\n\n\n96\n2006\n21.0\n183.0\n\n\n97\n2007\n28.0\n153.0\n\n\n98\n2008\n36.0\n212.0\n\n\n99\n2009\n34.0\n179.0\n\n\n100\n2010\n22.0\n196.0\n\n\n101\n2011\n41.0\n148.0\n\n\n102\n2012\n28.0\n140.0\n\n\n103\n2013\n26.0\n134.0\n\n\n104\n2014\n20.0\n114.0\n\n\n105\n2015\n28.0\n121.0\n\n\n\n\n\n\n:::",
+    "objectID": "Projects/project4.html#what-exactly-might-hint-towards-the-date-that-a-house-was-built",
+    "href": "Projects/project4.html#what-exactly-might-hint-towards-the-date-that-a-house-was-built",
+    "title": "Client Report - [Project 4]",
+    "section": "What Exactly Might Hint Towards the Date That a House was Built?",
+    "text": "What Exactly Might Hint Towards the Date That a House was Built?\nCreate 2-3 charts that evaluate potential relationships between the home variables and before1980. Explain what you learn from the charts that could help a machine learning algorithm.\nOne thing that will have a large impact on the machine learning results is the quality rating of the home. As you can see from the below graph, before 1980, the proportion of homes that were rated C quality is much higher than after the year 1980. This will have a big part in the machine learning process.\n\n\nShow the code\n# Melt the DataFrame to transform it into long format\nmelted_df = pd.melt(dwellings_ml, id_vars=['yrbuilt'], value_vars=['quality_A', 'quality_B', 'quality_C', 'quality_D', 'quality_X'],\n                     var_name='Quality', value_name='Rating')\n\n# Calculate the count of ratings for each quality and year\nrating_counts = melted_df.groupby(['yrbuilt', 'Quality']).sum().reset_index()\n\n# Create a bar chart using Plotly Express\nfig = px.bar(rating_counts, x='yrbuilt', y='Rating', color='Quality',\n              labels={'Rating': 'Number of Ratings', 'yrbuilt': 'Year Built'},\n              title='Number of Ratings for Each Quality Over Time')\nfig.show()\n\n\n                                                \n\n\nAnother variable that might have an affect on the year a home was built is square footage of homes. I know that there is historically a pattern of houses becoming bigger with the passage of time, so this might be a helpful factor in building a maching learning model.\n\n\nShow the code\nsubset_sqreftage = dwellings_ml.filter(regex = 'yrbuilt|livearea')\nave_area = subset_sqreftage.groupby('yrbuilt')['livearea'].mean().reset_index()\n\nfig2 = px.scatter(ave_area,\n                    x = 'yrbuilt',\n                    y = 'livearea',\n                    title = 'Average Square Footage by Year Built',\n                    labels = {'liveare': 'Average Square Footage', 'yrbuilt': 'Year Built'}\n)\nfig2\n\n\n                                                \n\n\n_The plot displays a low point in the graph around the year 1950, which might be a helpful indicator of characterizing houses as before 1980. There is a trend upward from there, so this could be helpful.",
     "crumbs": [
       "DS250 Projects",
       "Project 4"
     ]
   },
   {
-    "objectID": "Projects/project4.html#questiontask-2",
-    "href": "Projects/project4.html#questiontask-2",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 2",
-    "text": "QUESTION|TASK 2\nCOPY PASTE QUESTION|TASK 2 FROM THE PROJECT HERE\ntype your results and analysis here\n\n\nRead and format data\n# Include and execute your code here\n\n\ninclude figures in chunks and discuss your findings in the figure.\n::: {#cell-Q2 chart .cell execution_count=7}\n\nplot example\n# Include and execute your code here\nchart = px.bar(df.head(200),\n    x=\"name\", \n    y=\"AK\"\n)\nchart.show()\n\n\n                                                \nMy useless chart\n\n:::\n::: {#cell-Q2 table .cell .tbl-cap-location-top tbl-cap=‘Not much of a table’ execution_count=8}\n\ntable example\n# Include and execute your code here\nmydat = df.head(1000)\\\n    .groupby('year')\\\n    .sum()\\\n    .reset_index()\\\n    .tail(10)\\\n    .filter([\"year\", \"AK\",\"AR\"])\n\ndisplay(mydat)\n\n\n\n\n\n\n\n\n\nyear\nAK\nAR\n\n\n\n\n96\n2006\n21.0\n183.0\n\n\n97\n2007\n28.0\n153.0\n\n\n98\n2008\n36.0\n212.0\n\n\n99\n2009\n34.0\n179.0\n\n\n100\n2010\n22.0\n196.0\n\n\n101\n2011\n41.0\n148.0\n\n\n102\n2012\n28.0\n140.0\n\n\n103\n2013\n26.0\n134.0\n\n\n104\n2014\n20.0\n114.0\n\n\n105\n2015\n28.0\n121.0\n\n\n\n\n\n\n:::",
+    "objectID": "Projects/project4.html#using-specific-features-to-make-a-predictive-model",
+    "href": "Projects/project4.html#using-specific-features-to-make-a-predictive-model",
+    "title": "Client Report - [Project 4]",
+    "section": "Using Specific Features to Make a Predictive Model",
+    "text": "Using Specific Features to Make a Predictive Model\nBuild a classification model labeling houses as being built “before 1980” or “during or after 1980”. Your goal is to reach or exceed 90% accuracy. Explain your final model choice (algorithm, tuning parameters, etc) and describe what other models you tried.\nUsing this simple classification model, I was able to get 92 percent accuracy using a test size of .34. I used Random Forest to improve predictive performance. \n\n\nShow the code\n#Filter for the coloumns that are most useful\nwanted_columns = ['arcstyle_ONE-STORY', 'livearea', 'numbaths', 'tasp', 'netprice', 'sprice', 'stories', 'gartype_Att', 'basement', 'quality_C', 'arcstyle_TWO-STORY', 'abstrprd', 'quality_B', 'numbdrm']\n\n\n## Filtering out most of the useless coloumns, wasn't worth it\n# X_pred = dwellings_ml.drop(dwellings_ml.filter(regex = 'before1980|yrbuilt|parcel|quality_A|condition_Good|gartype_None|gartype_ATT/Det|arcstu;e_TRI-LEVEL|arcstyle_TRIE-LEVEL WITH BASEMENT|arcstyle_THREE-STORY|gartype_Det|condition_VGood|arcstyle_TWO AND HALF-STORY|quality_D|quality_X|condition_Fair|condition_Excel|gartype_CP|gartype_att/CP|gartype_det/CP|arcstyle_SPLIT LEVEL|arcstyle_CONVERSIONS').columns, axis = 1)\n\nX_pred = dwellings_ml[wanted_columns]\ny_pred = dwellings_ml['before1980']\n\n# Splitting the data :  Test size specifies the proportion of the dataset that should be allocated to the testing set\n            \nX_train, X_test, y_train, y_test = train_test_split(\n    X_pred, y_pred, test_size = .34, random_state = 76\n)\n\n#Training\nclf = RandomForestClassifier()\nclf = clf.fit(X_train, y_train)\n\n#Testing\ny_pred = clf.predict(X_test)\ny_probs = clf.predict_proba(X_test)\n\nprint(metrics.classification_report(y_pred, y_test))\n\n\n              precision    recall  f1-score   support\n\n           0       0.90      0.88      0.89      2923\n           1       0.93      0.94      0.93      4868\n\n    accuracy                           0.92      7791\n   macro avg       0.91      0.91      0.91      7791\nweighted avg       0.92      0.92      0.92      7791",
     "crumbs": [
       "DS250 Projects",
       "Project 4"
     ]
   },
   {
-    "objectID": "Projects/project4.html#questiontask-3",
-    "href": "Projects/project4.html#questiontask-3",
-    "title": "Client Report - [Insert Project Title]",
-    "section": "QUESTION|TASK 3",
-    "text": "QUESTION|TASK 3\nCOPY PASTE QUESTION|TASK 3 FROM THE PROJECT HERE\ntype your results and analysis here\n\n\nRead and format data\n# Include and execute your code here\n\n\ninclude figures in chunks and discuss your findings in the figure.\n::: {#cell-Q3 chart .cell execution_count=10}\n\nplot example\n# Include and execute your code here\nchart = px.bar(df.head(200),\n    x=\"name\", \n    y=\"AK\"\n)\nchart.show()\n\n\n                                                \nMy useless chart\n\n:::\n::: {#cell-Q3 table .cell .tbl-cap-location-top tbl-cap=‘Not much of a table’ execution_count=11}\n\ntable example\n# Include and execute your code here\nmydat = df.head(1000)\\\n    .groupby('year')\\\n    .sum()\\\n    .reset_index()\\\n    .tail(10)\\\n    .filter([\"year\", \"AK\",\"AR\"])\n\ndisplay(mydat)\n\n\n\n\n\n\n\n\n\nyear\nAK\nAR\n\n\n\n\n96\n2006\n21.0\n183.0\n\n\n97\n2007\n28.0\n153.0\n\n\n98\n2008\n36.0\n212.0\n\n\n99\n2009\n34.0\n179.0\n\n\n100\n2010\n22.0\n196.0\n\n\n101\n2011\n41.0\n148.0\n\n\n102\n2012\n28.0\n140.0\n\n\n103\n2013\n26.0\n134.0\n\n\n104\n2014\n20.0\n114.0\n\n\n105\n2015\n28.0\n121.0\n\n\n\n\n\n\n:::",
+    "objectID": "Projects/project4.html#why-did-i-use-those-specific-features",
+    "href": "Projects/project4.html#why-did-i-use-those-specific-features",
+    "title": "Client Report - [Project 4]",
+    "section": "Why Did I Use Those Specific Features?",
+    "text": "Why Did I Use Those Specific Features?\nJustify your classification model by discussing the most important features selected by your model. This discussion should include a chart and a description of the features.\n_Before building my classifier, I built this chart that shows me the most important features that can impact my model. Of the most important ones are if the house is one story, the area, the number of bathrooms, the different selling prices, and the number of stories. All of these features played big roles in the building of the classifier. In the beginning of this report, I guessed that the area would have an impact on whether a house could be classified as before 1980, and that is because houses have gotten bigger over time on average.\n\n\nShow the code\n# This creates a dataframe using the X train coloumns to show which features of the house contributed most to the classification model\ndf_features = pd.DataFrame(\n    {'f_names': X_train.columns, \n    'f_values': clf.feature_importances_}).sort_values('f_values', ascending = False)\n\n#Creates a bar chart that shows the significance of each feature\nchart = px.bar(df_features.head(25),\n    x='f_values', \n    y='f_names'\n)\nchart.update_layout(yaxis={'categoryorder':'total ascending'})",
+    "crumbs": [
+      "DS250 Projects",
+      "Project 4"
+    ]
+  },
+  {
+    "objectID": "Projects/project4.html#how-accurate-did-my-model-get",
+    "href": "Projects/project4.html#how-accurate-did-my-model-get",
+    "title": "Client Report - [Project 4]",
+    "section": "How Accurate Did My Model Get?",
+    "text": "How Accurate Did My Model Get?\nDescribe the quality of your classification model using 2-3 different evaluation metrics. You also need to explain how to interpret each of the evaluation metrics you use.\n_From the ROC curve below, you can see that the area under the curve is very high, which indicates that my model is a high performance model. The dotted line that you see below shows what the curve would look like if it was strictly guessing, so you can see that the ROC curve that I produced is much more accurate than just guessing.\n\n\nShow the code\nimport matplotlib.pyplot as plt\n\n# Set the threshold for predictions to achieve AUC=0.5 (random guessing)\nthreshold = 0.5\n\n# Predict probabilities for positive class\ny_prob = clf.predict_proba(X_test)[:, 1]\n\n# Adjust predictions based on the threshold\ny_pred_adjusted = (y_prob &gt; threshold).astype(int)\n\n# Plot the ROC curve with adjusted predictions\nroc_display = RocCurveDisplay.from_estimator(clf, X_test, y_test)\nroc_display.ax_.plot([0, 1], [0, 1], linestyle='--', color='gray', label='Random Guessing (AUC = 0.5)')\nroc_display.ax_.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n_The ROC Curve from above as well as the data from my classification report show that this classifier is high quality. Under the precision column, the row labeled “0” represents the proportion of instances where the model predicted a negative when it was truly negative. The row labeled “1” represents the proportion of instances where the model predicted a positive when it was truly positive. As you can see, the true negative proportion of 90% and the true positive proportion of .93 are very high, which is another indicator of the accuracy of this classifier.\n\n\nShow the code\nprint(metrics.classification_report(y_pred, y_test))\n\n\n              precision    recall  f1-score   support\n\n           0       0.90      0.88      0.89      2923\n           1       0.93      0.94      0.93      4868\n\n    accuracy                           0.92      7791\n   macro avg       0.91      0.91      0.91      7791\nweighted avg       0.92      0.92      0.92      7791",
     "crumbs": [
       "DS250 Projects",
       "Project 4"
